@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Sparkles, Building2, Home, Briefcase, CheckCircle, Users, Award, Clock } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Building2, Home, Briefcase, CheckCircle, Users, Award, Clock } from 'lucide-react';
 import { useBlockedRequestHandler } from './hooks/useBlockedRequestHandler';
 import NoTranslate from './components/NoTranslate';
+import LogoIcon from './components/LogoIcon';
 
 function App() {
   // Hook para manejar errores de solicitudes bloqueadas (como Google Translate)
@@ -48,12 +49,12 @@ function App() {
         <div className={`absolute inset-0 transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-50'} bg-gradient-to-r from-teal-50/50 via-white/50 to-cyan-50/50`}></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-20 sm:h-24'}`}>
-            <div className="flex items-center space-x-2 group nav-item-fade" style={{animationDelay: '0.1s'}}>
+            <div className="flex items-center space-x-3 group nav-item-fade" style={{animationDelay: '0.1s'}}>
               <div className="relative">
-                <Sparkles className={`${isScrolled ? 'h-6 w-6 sm:h-6 sm:w-6 md:h-7 md:w-7' : 'h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8'} text-teal-600 transform group-hover:rotate-12 transition-all duration-300`} />
+                <LogoIcon className={`${isScrolled ? 'h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14' : 'h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16'} transform group-hover:scale-110 transition-all duration-300`} />
                 <div className="absolute inset-0 bg-teal-400 rounded-full blur-xl glow-pulse"></div>
               </div>
-              <span className={`${isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'} font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent transition-all duration-300`}>LimpiezaPro</span>
+              <span className={`${isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'} font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent transition-all duration-300`}>Clean Solutions</span>
             </div>
 
             {/* Desktop Menu */}
@@ -363,7 +364,7 @@ function App() {
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Sobre Nosotros</h2>
               <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
-                Con más de 10 años de experiencia en el sector de limpieza profesional, LimpiezaPro se ha consolidado como líder en servicios de limpieza para empresas, oficinas y hogares.
+              Con más de 10 años de experiencia en el sector de limpieza profesional, Clean Solutions se ha consolidado como líder en servicios de limpieza para empresas, oficinas y hogares.
               </p>
               <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 Nuestra misión es proporcionar servicios de limpieza excepcionales que superen las expectativas de nuestros clientes, utilizando técnicas avanzadas y productos ecológicos de alta calidad.
@@ -507,24 +508,24 @@ function App() {
                     <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600 mr-3 sm:mr-4 mt-0.5 sm:mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-base sm:text-lg text-gray-900 mb-1">Teléfono</h4>
-                      <p className="text-sm sm:text-base text-gray-700">+52 (55) 1234-5678</p>
-                      <p className="text-sm sm:text-base text-gray-700">+52 (55) 8765-4321</p>
+                      <p className="text-sm sm:text-base text-gray-700">+569 53417956</p>
+                      <p className="text-sm sm:text-base text-gray-700">+569 50293803</p>
                     </div>
                   </div>
                   <div className="flex items-start">
                     <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600 mr-3 sm:mr-4 mt-0.5 sm:mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-base sm:text-lg text-gray-900 mb-1">Email</h4>
-                      <p className="text-sm sm:text-base text-gray-700 break-words">contacto@limpiezapro.com</p>
-                      <p className="text-sm sm:text-base text-gray-700 break-words">ventas@limpiezapro.com</p>
+                      <p className="text-sm sm:text-base text-gray-700 break-words">contacto@cleansolutions.com</p>
+                      <p className="text-sm sm:text-base text-gray-700 break-words">ventas@cleansolutions.com</p>
                     </div>
                   </div>
                   <div className="flex items-start">
                     <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600 mr-3 sm:mr-4 mt-0.5 sm:mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-base sm:text-lg text-gray-900 mb-1">Dirección</h4>
-                      <p className="text-sm sm:text-base text-gray-700">Av. Reforma 123, Col. Centro</p>
-                      <p className="text-sm sm:text-base text-gray-700">Ciudad de México, CDMX 06000</p>
+                      <p className="text-sm sm:text-base text-gray-700">Agustinas 1022 oficina 1004</p>
+                      <p className="text-sm sm:text-base text-gray-700">Santiago</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -575,7 +576,7 @@ function App() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm sm:text-base"
-                    placeholder="+52 (55) 1234-5678"
+                    placeholder="+569 50000000"
                   />
                 </div>
                 <div>
@@ -623,9 +624,9 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
             <div className="text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start space-x-2 mb-3 sm:mb-4">
-                <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-teal-400" />
-                <span className="text-xl sm:text-2xl font-bold">LimpiezaPro</span>
+              <div className="flex items-center justify-center sm:justify-start space-x-3 mb-3 sm:mb-4">
+                <LogoIcon className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14" />
+                <span className="text-xl sm:text-2xl font-bold">Clean Solutions</span>
               </div>
               <p className="text-sm sm:text-base text-gray-400 max-w-xs mx-auto sm:mx-0">Tu socio confiable en servicios de limpieza profesional para empresas, oficinas y hogares.</p>
             </div>
@@ -654,7 +655,7 @@ function App() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-6 sm:pt-8 text-center">
-            <p className="text-xs sm:text-sm text-gray-400">&copy; 2025 LimpiezaPro. Todos los derechos reservados.</p>
+            <p className="text-xs sm:text-sm text-gray-400">&copy; 2025 Clean Solutions. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
