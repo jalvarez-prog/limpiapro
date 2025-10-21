@@ -675,15 +675,15 @@ function App() {
             </div>
             <div className="text-center sm:text-left sm:col-span-2 lg:col-span-1">
               <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Síguenos</h4>
-              <div className="flex justify-center sm:justify-start space-x-3 sm:space-x-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors" aria-label="Página de Facebook de Clean Solutions">
-                  <Facebook className="h-5 w-5 sm:h-6 sm:w-6" />
+              <div className="flex justify-center sm:justify-start space-x-4 sm:space-x-4">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-blue-400 transition-all transform hover:scale-110" aria-label="Página de Facebook de Clean Solutions">
+                  <Facebook className="h-7 w-7 sm:h-6 sm:w-6" />
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-400 transition-colors" aria-label="Perfil de Instagram de Clean Solutions">
-                  <Instagram className="h-5 w-5 sm:h-6 sm:w-6" />
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-pink-400 transition-all transform hover:scale-110" aria-label="Perfil de Instagram de Clean Solutions">
+                  <Instagram className="h-7 w-7 sm:h-6 sm:w-6" />
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-300 transition-colors" aria-label="Cuenta de Twitter de Clean Solutions">
-                  <Twitter className="h-5 w-5 sm:h-6 sm:w-6" />
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-blue-300 transition-all transform hover:scale-110" aria-label="Cuenta de Twitter de Clean Solutions">
+                  <Twitter className="h-7 w-7 sm:h-6 sm:w-6" />
                 </a>
               </div>
             </div>
