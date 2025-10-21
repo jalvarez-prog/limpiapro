@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Building2, Home, Briefcase, CheckCircle, Users, Award, Clock } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Building2, Home, Briefcase, CheckCircle, Users, Award, Clock, Linkedin, Youtube, MessageCircle } from 'lucide-react';
 import { useBlockedRequestHandler } from './hooks/useBlockedRequestHandler';
 import NoTranslate from './components/NoTranslate';
 import LogoIcon from './components/LogoIcon';
@@ -105,38 +105,72 @@ function App() {
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </button>
 
-              <div className="flex items-center space-x-4 ml-6 pl-6 border-l border-gray-200">
+              {/* Social Media Icons */}
+              <div className="flex items-center space-x-3 ml-6 pl-6 border-l-2 border-gray-200/50">
                 <a 
                   href="https://facebook.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative text-gray-600 hover:text-blue-600 transition-all duration-300 group"
+                  className="relative p-2 rounded-full bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-blue-600 transition-all duration-300 group"
                   aria-label="Síguenos en Facebook"
                 >
-                  <Facebook className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300" />
-                  <span className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                  <Facebook className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <span className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
                 <a 
                   href="https://instagram.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative text-gray-600 hover:text-pink-600 transition-all duration-300 group"
+                  className="relative p-2 rounded-full bg-gray-50 hover:bg-pink-50 text-gray-600 hover:text-pink-600 transition-all duration-300 group"
                   aria-label="Síguenos en Instagram"
                 >
-                  <Instagram className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300" />
-                  <span className="absolute inset-0 bg-pink-600 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                  <Instagram className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <span className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
                 <a 
                   href="https://twitter.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative text-gray-600 hover:text-blue-400 transition-all duration-300 group"
+                  className="relative p-2 rounded-full bg-gray-50 hover:bg-sky-50 text-gray-600 hover:text-sky-500 transition-all duration-300 group"
                   aria-label="Síguenos en Twitter"
                 >
-                  <Twitter className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300" />
-                  <span className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                  <Twitter className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <span className="absolute inset-0 bg-sky-500 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
+                </a>
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="relative p-2 rounded-full bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-blue-700 transition-all duration-300 group"
+                  aria-label="Síguenos en LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <span className="absolute inset-0 bg-blue-700 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
+                </a>
+                <a 
+                  href="https://youtube.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="relative p-2 rounded-full bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-600 transition-all duration-300 group"
+                  aria-label="Síguenos en YouTube"
+                >
+                  <Youtube className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <span className="absolute inset-0 bg-red-600 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
               </div>
+
+              {/* WhatsApp Button */}
+              <a 
+                href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="relative ml-4 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group overflow-hidden"
+                style={{animationDelay: '0.7s'}}
+              >
+                <MessageCircle className="h-5 w-5 fill-white" />
+                <span className="text-sm font-semibold">WhatsApp</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -211,35 +245,73 @@ function App() {
 
               <div className="pt-4 mt-4 border-t border-teal-100">
                 <p className="text-center text-sm text-gray-600 mb-3">Síguenos en redes</p>
-                <div className="flex items-center justify-center space-x-4">
+                <div className="grid grid-cols-3 gap-3 mb-4">
                   <a 
                     href="https://facebook.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110"
+                    className="p-3 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Facebook de Clean Solutions"
                   >
-                    <Facebook className="h-7 w-7" />
+                    <Facebook className="h-6 w-6" />
                   </a>
                   <a 
                     href="https://instagram.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-full bg-pink-50 text-pink-600 hover:bg-pink-100 transition-all duration-300 transform hover:scale-110"
+                    className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 text-pink-600 hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Instagram de Clean Solutions"
                   >
-                    <Instagram className="h-7 w-7" />
+                    <Instagram className="h-6 w-6" />
                   </a>
                   <a 
                     href="https://twitter.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-full bg-blue-50 text-blue-400 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110"
+                    className="p-3 rounded-xl bg-sky-50 text-sky-500 hover:bg-sky-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Twitter de Clean Solutions"
                   >
-                    <Twitter className="h-7 w-7" />
+                    <Twitter className="h-6 w-6" />
+                  </a>
+                  <a 
+                    href="https://linkedin.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="p-3 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    aria-label="LinkedIn de Clean Solutions"
+                  >
+                    <Linkedin className="h-6 w-6" />
+                  </a>
+                  <a 
+                    href="https://youtube.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="p-3 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    aria-label="YouTube de Clean Solutions"
+                  >
+                    <Youtube className="h-6 w-6" />
+                  </a>
+                  <a 
+                    href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="p-3 rounded-xl bg-green-50 text-green-600 hover:bg-green-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    aria-label="WhatsApp de Clean Solutions"
+                  >
+                    <MessageCircle className="h-6 w-6 fill-green-600" />
                   </a>
                 </div>
+                
+                {/* WhatsApp Contact Button */}
+                <a 
+                  href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                >
+                  <MessageCircle className="h-5 w-5 fill-white" />
+                  <span className="text-sm font-semibold">Contáctanos por WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>
@@ -675,15 +747,35 @@ function App() {
             </div>
             <div className="text-center sm:text-left sm:col-span-2 lg:col-span-1">
               <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Síguenos</h4>
-              <div className="flex justify-center sm:justify-start space-x-4 sm:space-x-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-blue-400 transition-all transform hover:scale-110" aria-label="Página de Facebook de Clean Solutions">
-                  <Facebook className="h-7 w-7 sm:h-6 sm:w-6" />
+              <div className="flex flex-wrap justify-center sm:justify-start gap-3">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-blue-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="Facebook">
+                  <Facebook className="h-5 w-5" />
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-pink-400 transition-all transform hover:scale-110" aria-label="Perfil de Instagram de Clean Solutions">
-                  <Instagram className="h-7 w-7 sm:h-6 sm:w-6" />
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="Instagram">
+                  <Instagram className="h-5 w-5" />
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-blue-300 transition-all transform hover:scale-110" aria-label="Cuenta de Twitter de Clean Solutions">
-                  <Twitter className="h-7 w-7 sm:h-6 sm:w-6" />
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-sky-500 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="Twitter">
+                  <Twitter className="h-5 w-5" />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-blue-700 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="LinkedIn">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="YouTube">
+                  <Youtube className="h-5 w-5" />
+                </a>
+                <a href="https://wa.me/56953417956" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="WhatsApp">
+                  <MessageCircle className="h-5 w-5" />
+                </a>
+              </div>
+              <div className="mt-4">
+                <a 
+                  href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all transform hover:scale-105"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span className="text-sm">+569 53417956</span>
                 </a>
               </div>
             </div>
