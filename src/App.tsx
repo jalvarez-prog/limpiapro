@@ -270,7 +270,7 @@ function App() {
           <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-cyan-400 rounded-full animate-float opacity-40" style={{animationDelay: '1.5s'}}></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-20 relative z-10">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight opacity-0 animate-fadeInUp">
               Limpieza Profesional
@@ -287,7 +287,7 @@ function App() {
               <div className="absolute inset-0 shine-effect"></div>
             </button>
 
-            <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto px-4 sm:px-0">
+            <div className="mt-8 sm:mt-12 md:mt-16 mb-28 sm:mb-20 md:mb-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto px-4 sm:px-0">
               <div className="opacity-0 animate-fadeInUp animate-delay-500 group bg-white/10 backdrop-blur-md p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-2xl hover:bg-white/20 transition-all duration-300 border border-white/20 transform hover:-translate-y-1 md:hover:-translate-y-2">
                 <Building2 className="h-10 w-10 sm:h-12 sm:w-12 text-teal-300 mx-auto mb-3 sm:mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
                 <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2 text-white">Empresas</h3>
