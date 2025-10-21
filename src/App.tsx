@@ -63,9 +63,17 @@ function App() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               <button 
-                onClick={() => scrollToSection('servicios')} 
+                onClick={() => scrollToSection('inicio')} 
                 className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
                 style={{animationDelay: '0.2s'}}
+              >
+                <span className="relative z-10">Inicio</span>
+                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </button>
+              <button 
+                onClick={() => scrollToSection('servicios')} 
+                className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
+                style={{animationDelay: '0.3s'}}
               >
                 <span className="relative z-10">Servicios</span>
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
@@ -73,7 +81,7 @@ function App() {
               <button 
                 onClick={() => scrollToSection('nosotros')} 
                 className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
-                style={{animationDelay: '0.3s'}}
+                style={{animationDelay: '0.4s'}}
               >
                 <span className="relative z-10">Nosotros</span>
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
@@ -81,7 +89,7 @@ function App() {
               <button 
                 onClick={() => scrollToSection('equipo')} 
                 className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
-                style={{animationDelay: '0.4s'}}
+                style={{animationDelay: '0.5s'}}
               >
                 <span className="relative z-10">Equipo</span>
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
@@ -89,7 +97,7 @@ function App() {
               <button 
                 onClick={() => scrollToSection('contacto')} 
                 className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
-                style={{animationDelay: '0.5s'}}
+                style={{animationDelay: '0.6s'}}
               >
                 <span className="relative z-10">Contacto</span>
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
@@ -153,6 +161,15 @@ function App() {
         <div className={`md:hidden transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
           <div className="bg-gradient-to-b from-white via-teal-50/30 to-cyan-50/30 border-t border-teal-100">
             <div className="px-4 py-6 space-y-2">
+              <button 
+                onClick={() => scrollToSection('inicio')} 
+                className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
+              >
+                <div className="flex items-center justify-center space-x-3">
+                  <Home className="h-5 w-5" />
+                  <span>Inicio</span>
+                </div>
+              </button>
               <button 
                 onClick={() => scrollToSection('servicios')} 
                 className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
@@ -229,7 +246,7 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-16 md:pt-20 relative min-h-screen flex items-center overflow-hidden" role="banner">
+      <section id="inicio" className="pt-16 md:pt-20 relative min-h-screen flex items-center overflow-hidden" role="banner">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
@@ -647,6 +664,7 @@ function App() {
             <div className="text-center sm:text-left">
               <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Enlaces Rápidos</h4>
               <ul className="space-y-1.5 sm:space-y-2">
+                <li><button onClick={() => scrollToSection('inicio')} className="text-sm sm:text-base text-gray-400 hover:text-teal-400 transition-colors">Inicio</button></li>
                 <li><button onClick={() => scrollToSection('servicios')} className="text-sm sm:text-base text-gray-400 hover:text-teal-400 transition-colors">Servicios</button></li>
                 <li><button onClick={() => scrollToSection('nosotros')} className="text-sm sm:text-base text-gray-400 hover:text-teal-400 transition-colors">Nosotros</button></li>
                 <li><button onClick={() => scrollToSection('equipo')} className="text-sm sm:text-base text-gray-400 hover:text-teal-400 transition-colors">Equipo</button></li>
