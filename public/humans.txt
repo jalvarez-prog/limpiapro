@@ -1,0 +1,38 @@
+/* TEAM */
+    Company: Clean Solutions
+    Site: https://cleansolutions.cl
+    Email: contacto@cleansolutions.com
+    Location: Santiago, Chile
+
+/* SERVICES */
+    Corporate Cleaning: Professional cleaning services for companies
+    Office Cleaning: Specialized office maintenance
+    Apartment Cleaning: Residential cleaning services
+    
+/* THANKS */
+    Name: Our valued clients in Santiago
+
+/* SITE */
+    Last update: 2025/01/21
+    Language: Spanish / Español
+    Standards: HTML5, CSS3, JavaScript ES6+
+    Components: React, Vite, Tailwind CSS
+    Software: Visual Studio Code
+    
+/* COMPANY INFO */
+    Founded: 2015
+    Experience: 10+ years in professional cleaning
+    Team: 50+ certified professionals
+    Coverage: Santiago Metropolitan Region
+    
+/* SOCIAL */
+    Facebook: https://facebook.com/cleansolutions
+    Instagram: https://instagram.com/cleansolutions
+    Twitter: https://twitter.com/cleansolutions
+
+/* CONTACT */
+    Phone: +569 53417956
+    Phone: +569 50293803
+    Address: Agustinas 1022 oficina 1004, Santiago
+    Hours: Monday-Friday: 8:00 AM - 8:00 PM
+           Saturday: 9:00 AM - 5:00 PM

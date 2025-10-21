@@ -3,6 +3,7 @@ import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Building2, 
 import { useBlockedRequestHandler } from './hooks/useBlockedRequestHandler';
 import NoTranslate from './components/NoTranslate';
 import LogoIcon from './components/LogoIcon';
+import SEO from './components/SEO';
 
 function App() {
   // Hook para manejar errores de solicitudes bloqueadas (como Google Translate)
@@ -43,9 +44,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO />
       <NoTranslate />
       {/* Navbar */}
-      <nav className={`fixed w-full backdrop-blur-md z-50 transition-all duration-300 nav-slide-down ${isScrolled ? 'bg-white/95 shadow-lg' : 'bg-white/70 shadow-sm'}`}>
+      <header>
+      <nav className={`fixed w-full backdrop-blur-md z-50 transition-all duration-300 nav-slide-down ${isScrolled ? 'bg-white/95 shadow-lg' : 'bg-white/70 shadow-sm'}`} role="navigation" aria-label="Navegación principal">
         <div className={`absolute inset-0 transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-50'} bg-gradient-to-r from-teal-50/50 via-white/50 to-cyan-50/50`}></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-20 sm:h-24'}`}>
@@ -98,6 +101,7 @@ function App() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="relative text-gray-600 hover:text-blue-600 transition-all duration-300 group"
+                  aria-label="Síguenos en Facebook"
                 >
                   <Facebook className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
@@ -107,6 +111,7 @@ function App() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="relative text-gray-600 hover:text-pink-600 transition-all duration-300 group"
+                  aria-label="Síguenos en Instagram"
                 >
                   <Instagram className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-pink-600 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
@@ -116,6 +121,7 @@ function App() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="relative text-gray-600 hover:text-blue-400 transition-all duration-300 group"
+                  aria-label="Síguenos en Twitter"
                 >
                   <Twitter className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
@@ -128,6 +134,8 @@ function App() {
               onClick={() => setIsMenuOpen(!isMenuOpen)} 
               className="md:hidden relative p-2 rounded-lg bg-gradient-to-r from-teal-50 to-cyan-50 hover:from-teal-100 hover:to-cyan-100 transition-all duration-300 group overflow-hidden nav-item-fade"
               style={{animationDelay: '0.3s'}}
+              aria-label="Menú de navegación"
+              aria-expanded={isMenuOpen}
             >
               <div className="absolute inset-0 shimmer-effect"></div>
               <div className="relative">
@@ -189,25 +197,28 @@ function App() {
                     href="https://facebook.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110"
+                    className="p-3 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110"
+                    aria-label="Facebook de Clean Solutions"
                   >
-                    <Facebook className="h-5 w-5" />
+                    <Facebook className="h-7 w-7" />
                   </a>
                   <a 
                     href="https://instagram.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-full bg-pink-50 text-pink-600 hover:bg-pink-100 transition-all duration-300 transform hover:scale-110"
+                    className="p-3 rounded-full bg-pink-50 text-pink-600 hover:bg-pink-100 transition-all duration-300 transform hover:scale-110"
+                    aria-label="Instagram de Clean Solutions"
                   >
-                    <Instagram className="h-5 w-5" />
+                    <Instagram className="h-7 w-7" />
                   </a>
                   <a 
                     href="https://twitter.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-full bg-blue-50 text-blue-400 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110"
+                    className="p-3 rounded-full bg-blue-50 text-blue-400 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110"
+                    aria-label="Twitter de Clean Solutions"
                   >
-                    <Twitter className="h-5 w-5" />
+                    <Twitter className="h-7 w-7" />
                   </a>
                 </div>
               </div>
@@ -215,15 +226,18 @@ function App() {
           </div>
         </div>
       </nav>
+      </header>
 
       {/* Hero Section */}
-      <section className="pt-16 md:pt-20 relative min-h-screen flex items-center overflow-hidden">
+      <section className="pt-16 md:pt-20 relative min-h-screen flex items-center overflow-hidden" role="banner">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.pexels.com/photos/6195275/pexels-photo-6195275.jpeg?auto=compress&cs=tinysrgb&w=1920"
-            alt="Professional Cleaning Service"
+            alt="Servicio de limpieza profesional Clean Solutions - Oficinas y empresas en Santiago"
             className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/80 via-cyan-500/75 to-blue-500/80"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-teal-800/10 to-transparent"></div>
@@ -283,10 +297,10 @@ function App() {
       </section>
 
       {/* Servicios Section */}
-      <section id="servicios" className="py-12 sm:py-16 md:py-20 bg-white">
+      <section id="servicios" className="py-12 sm:py-16 md:py-20 bg-white" aria-labelledby="servicios-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Nuestros Servicios</h2>
+            <h2 id="servicios-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Nuestros Servicios de Limpieza Profesional</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">Ofrecemos soluciones integrales de limpieza adaptadas a tus necesidades</p>
           </div>
 
@@ -358,11 +372,11 @@ function App() {
       </section>
 
       {/* Nosotros Section */}
-      <section id="nosotros" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+      <section id="nosotros" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100" aria-labelledby="nosotros-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Sobre Nosotros</h2>
+              <h2 id="nosotros-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Sobre Clean Solutions</h2>
               <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
               Con más de 10 años de experiencia en el sector de limpieza profesional, Clean Solutions se ha consolidado como líder en servicios de limpieza para empresas, oficinas y hogares.
               </p>
@@ -419,10 +433,10 @@ function App() {
       </section>
 
       {/* Equipo Section */}
-      <section id="equipo" className="py-12 sm:py-16 md:py-20 bg-white">
+      <section id="equipo" className="py-12 sm:py-16 md:py-20 bg-white" aria-labelledby="equipo-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Nuestro Equipo</h2>
+            <h2 id="equipo-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Nuestro Equipo Profesional</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">Profesionales capacitados y certificados listos para brindarte el mejor servicio</p>
           </div>
 
@@ -492,10 +506,10 @@ function App() {
       </section>
 
       {/* Contacto Section */}
-      <section id="contacto" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-teal-50 via-white to-cyan-50">
+      <section id="contacto" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-teal-50 via-white to-cyan-50" aria-labelledby="contacto-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Contáctanos</h2>
+            <h2 id="contacto-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Contáctanos - Clean Solutions Santiago</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">Estamos listos para atender tus necesidades de limpieza</p>
           </div>
 
@@ -642,13 +656,13 @@ function App() {
             <div className="text-center sm:text-left sm:col-span-2 lg:col-span-1">
               <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Síguenos</h4>
               <div className="flex justify-center sm:justify-start space-x-3 sm:space-x-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors" aria-label="Página de Facebook de Clean Solutions">
                   <Facebook className="h-5 w-5 sm:h-6 sm:w-6" />
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-400 transition-colors">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-400 transition-colors" aria-label="Perfil de Instagram de Clean Solutions">
                   <Instagram className="h-5 w-5 sm:h-6 sm:w-6" />
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-300 transition-colors">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-300 transition-colors" aria-label="Cuenta de Twitter de Clean Solutions">
                   <Twitter className="h-5 w-5 sm:h-6 sm:w-6" />
                 </a>
               </div>
