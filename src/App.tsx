@@ -37,7 +37,7 @@ function App() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const yOffset = window.innerWidth < 640 ? -80 : -20; // Mayor offset en móvil
+      const yOffset = window.innerWidth < 640 ? -65 : -20; // Offset optimizado para móvil
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
       setIsMenuOpen(false);
@@ -316,7 +316,7 @@ function App() {
       </section>
 
       {/* Servicios Section */}
-      <section id="servicios" className="pt-24 pb-12 sm:py-16 md:py-20 bg-white" aria-labelledby="servicios-title">
+      <section id="servicios" className="pt-20 pb-12 sm:py-16 md:py-20 bg-white" aria-labelledby="servicios-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <h2 id="servicios-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Nuestros Servicios de Limpieza Profesional</h2>
@@ -391,7 +391,7 @@ function App() {
       </section>
 
       {/* Nosotros Section */}
-      <section id="nosotros" className="pt-24 pb-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100" aria-labelledby="nosotros-title">
+      <section id="nosotros" className="pt-20 pb-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100" aria-labelledby="nosotros-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
             <div>
@@ -452,7 +452,7 @@ function App() {
       </section>
 
       {/* Equipo Section */}
-      <section id="equipo" className="pt-24 pb-12 sm:py-16 md:py-20 bg-white" aria-labelledby="equipo-title">
+      <section id="equipo" className="pt-20 pb-12 sm:py-16 md:py-20 bg-white" aria-labelledby="equipo-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <h2 id="equipo-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Nuestro Equipo Profesional</h2>
@@ -525,7 +525,7 @@ function App() {
       </section>
 
       {/* Contacto Section */}
-      <section id="contacto" className="pt-24 pb-12 sm:py-16 md:py-20 bg-gradient-to-br from-teal-50 via-white to-cyan-50" aria-labelledby="contacto-title">
+      <section id="contacto" className="pt-20 pb-12 sm:py-16 md:py-20 bg-gradient-to-br from-teal-50 via-white to-cyan-50" aria-labelledby="contacto-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <h2 id="contacto-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Contáctanos - Clean Solutions Santiago</h2>
