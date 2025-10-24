@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Building2, Home, Briefcase, CheckCircle, Users, Award, Clock, Linkedin, Youtube, MessageCircle } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, Twitter, Phone, Mail, MapPin, Building2, Home, Briefcase, CheckCircle, Users, Award, Clock, Linkedin, Youtube, MessageCircle, Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useBlockedRequestHandler } from './hooks/useBlockedRequestHandler';
 import NoTranslate from './components/NoTranslate';
 import LogoIcon from './components/LogoIcon';
 import SEO from './components/SEO';
+import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
+import { submitContactForm, ContactFormData } from './lib/supabase';
 
 function App() {
   // Hook para manejar errores de solicitudes bloqueadas (como Google Translate)
@@ -11,18 +13,85 @@ function App() {
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     phone: '',
     service: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Función mejorada para abrir WhatsApp con detección inteligente de plataforma
+  const handleWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>, message: string = 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza') => {
     e.preventDefault();
-    alert('Gracias por contactarnos. Nos pondremos en contacto contigo pronto.');
-    setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+    const phoneNumber = '56950293803';
+    
+    // Detección de dispositivo
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+    
+    // URLs para diferentes plataformas
+    const whatsappApiUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    
+    if (isMobile) {
+      // En dispositivos móviles, usar wa.me directamente
+      window.location.href = whatsappApiUrl;
+      
+    } else {
+      // En desktop - Abrir WhatsApp Web directamente
+      window.open(whatsappWebUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+  
+  // Función auxiliar para obtener la URL de WhatsApp (para casos donde no podemos usar onClick)
+  const getWhatsAppLink = (message: string = 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza') => {
+    const phoneNumber = '56950293803';
+    return `https://wa.me/${phoneNumber}?text=${message}`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validación básica
+    if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+      setSubmitStatus('error');
+      setStatusMessage('Por favor, completa todos los campos.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setStatusMessage('');
+
+    try {
+      const result = await submitContactForm(formData);
+      
+      if (result.success) {
+        setSubmitStatus('success');
+        setStatusMessage(result.message);
+        // Limpiar formulario después de envío exitoso
+        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        
+        // Limpiar mensaje de éxito después de 5 segundos
+        setTimeout(() => {
+          setSubmitStatus('idle');
+          setStatusMessage('');
+        }, 5000);
+      } else {
+        setSubmitStatus('error');
+        setStatusMessage(result.message);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setStatusMessage('Error al enviar el formulario. Por favor, intenta de nuevo.');
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -48,25 +117,26 @@ function App() {
     <div className="min-h-screen bg-white">
       <SEO />
       <NoTranslate />
+      <WhatsAppFloatingButton />
       {/* Navbar */}
       <header>
       <nav className={`fixed w-full backdrop-blur-md z-50 transition-all duration-300 nav-slide-down ${isScrolled ? 'bg-white/95 shadow-lg' : 'bg-white/70 shadow-sm'}`} role="navigation" aria-label="Navegación principal">
         <div className={`absolute inset-0 transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-50'} bg-gradient-to-r from-teal-50/50 via-white/50 to-cyan-50/50`}></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-20 sm:h-24'}`}>
-            <div className="flex items-center space-x-3 group nav-item-fade" style={{animationDelay: '0.1s'}}>
+          <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'h-14 sm:h-16' : 'h-16 sm:h-18'}`}>
+            <div className="flex items-center space-x-2 group nav-item-fade" style={{animationDelay: '0.1s'}}>
               <div className="relative">
-                <LogoIcon className={`${isScrolled ? 'h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14' : 'h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16'} transform group-hover:scale-110 transition-all duration-300`} />
+                <LogoIcon className={`${isScrolled ? 'h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10' : 'h-9 w-9 sm:h-10 sm:w-10 md:h-11 md:w-11'} transform group-hover:scale-110 transition-all duration-300`} />
                 <div className="absolute inset-0 bg-teal-400 rounded-full blur-xl glow-pulse"></div>
               </div>
-              <span className={`${isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'} font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent transition-all duration-300`}>Clean Solutions</span>
+              <span className={`${isScrolled ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'} font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent transition-all duration-300`}>Clean Solutions</span>
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               <button 
                 onClick={() => scrollToSection('inicio')} 
-                className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
+                className="relative text-gray-700 hover:text-teal-600 transition-colors text-sm font-medium group nav-hover-lift nav-item-fade"
                 style={{animationDelay: '0.2s'}}
               >
                 <span className="relative z-10">Inicio</span>
@@ -74,7 +144,7 @@ function App() {
               </button>
               <button 
                 onClick={() => scrollToSection('servicios')} 
-                className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
+                className="relative text-gray-700 hover:text-teal-600 transition-colors text-sm font-medium group nav-hover-lift nav-item-fade"
                 style={{animationDelay: '0.3s'}}
               >
                 <span className="relative z-10">Servicios</span>
@@ -82,7 +152,7 @@ function App() {
               </button>
               <button 
                 onClick={() => scrollToSection('nosotros')} 
-                className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
+                className="relative text-gray-700 hover:text-teal-600 transition-colors text-sm font-medium group nav-hover-lift nav-item-fade"
                 style={{animationDelay: '0.4s'}}
               >
                 <span className="relative z-10">Nosotros</span>
@@ -90,7 +160,7 @@ function App() {
               </button>
               <button 
                 onClick={() => scrollToSection('equipo')} 
-                className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
+                className="relative text-gray-700 hover:text-teal-600 transition-colors text-sm font-medium group nav-hover-lift nav-item-fade"
                 style={{animationDelay: '0.5s'}}
               >
                 <span className="relative z-10">Equipo</span>
@@ -98,7 +168,7 @@ function App() {
               </button>
               <button 
                 onClick={() => scrollToSection('contacto')} 
-                className="relative text-gray-700 hover:text-teal-600 transition-colors font-medium group nav-hover-lift nav-item-fade"
+                className="relative text-gray-700 hover:text-teal-600 transition-colors text-sm font-medium group nav-hover-lift nav-item-fade"
                 style={{animationDelay: '0.6s'}}
               >
                 <span className="relative z-10">Contacto</span>
@@ -106,69 +176,68 @@ function App() {
               </button>
 
               {/* Social Media Icons */}
-              <div className="flex items-center space-x-3 ml-6 pl-6 border-l-2 border-gray-200/50">
+              <div className="flex items-center space-x-2 ml-4 pl-4 border-l-2 border-gray-200/50">
                 <a 
                   href="https://facebook.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative p-2 rounded-full bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-blue-600 transition-all duration-300 group"
+                  className="relative p-1.5 rounded-full bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-blue-600 transition-all duration-300 group"
                   aria-label="Síguenos en Facebook"
                 >
-                  <Facebook className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <Facebook className="h-3.5 w-3.5 transform group-hover:scale-125 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
                 <a 
                   href="https://instagram.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative p-2 rounded-full bg-gray-50 hover:bg-pink-50 text-gray-600 hover:text-pink-600 transition-all duration-300 group"
+                  className="relative p-1.5 rounded-full bg-gray-50 hover:bg-pink-50 text-gray-600 hover:text-pink-600 transition-all duration-300 group"
                   aria-label="Síguenos en Instagram"
                 >
-                  <Instagram className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <Instagram className="h-3.5 w-3.5 transform group-hover:scale-125 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
                 <a 
                   href="https://twitter.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative p-2 rounded-full bg-gray-50 hover:bg-sky-50 text-gray-600 hover:text-sky-500 transition-all duration-300 group"
+                  className="relative p-1.5 rounded-full bg-gray-50 hover:bg-sky-50 text-gray-600 hover:text-sky-500 transition-all duration-300 group"
                   aria-label="Síguenos en Twitter"
                 >
-                  <Twitter className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <Twitter className="h-3.5 w-3.5 transform group-hover:scale-125 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-sky-500 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
                 <a 
                   href="https://linkedin.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative p-2 rounded-full bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-blue-700 transition-all duration-300 group"
+                  className="relative p-1.5 rounded-full bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-blue-700 transition-all duration-300 group"
                   aria-label="Síguenos en LinkedIn"
                 >
-                  <Linkedin className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <Linkedin className="h-3.5 w-3.5 transform group-hover:scale-125 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-blue-700 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
                 <a 
                   href="https://youtube.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="relative p-2 rounded-full bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-600 transition-all duration-300 group"
+                  className="relative p-1.5 rounded-full bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-600 transition-all duration-300 group"
                   aria-label="Síguenos en YouTube"
                 >
-                  <Youtube className="h-4 w-4 transform group-hover:scale-125 transition-transform duration-300" />
+                  <Youtube className="h-3.5 w-3.5 transform group-hover:scale-125 transition-transform duration-300" />
                   <span className="absolute inset-0 bg-red-600 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 </a>
               </div>
 
               {/* WhatsApp Button */}
               <a 
-                href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="relative ml-4 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group overflow-hidden"
+                href={getWhatsAppLink()} 
+                onClick={(e) => handleWhatsAppClick(e)}
+                className="relative ml-3 flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 group overflow-hidden cursor-pointer"
                 style={{animationDelay: '0.7s'}}
               >
-                <MessageCircle className="h-5 w-5 fill-white" />
-                <span className="text-sm font-semibold">WhatsApp</span>
+                <MessageCircle className="h-4 w-4 fill-white" />
+                <span className="text-xs font-semibold">WhatsApp</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               </a>
             </div>
@@ -176,7 +245,7 @@ function App() {
             {/* Mobile Menu Button */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)} 
-              className="md:hidden relative p-2 rounded-lg bg-gradient-to-r from-teal-50 to-cyan-50 hover:from-teal-100 hover:to-cyan-100 transition-all duration-300 group overflow-hidden nav-item-fade"
+              className="md:hidden relative p-1.5 rounded-lg bg-gradient-to-r from-teal-50 to-cyan-50 hover:from-teal-100 hover:to-cyan-100 transition-all duration-300 group overflow-hidden nav-item-fade"
               style={{animationDelay: '0.3s'}}
               aria-label="Menú de navegación"
               aria-expanded={isMenuOpen}
@@ -184,9 +253,9 @@ function App() {
               <div className="absolute inset-0 shimmer-effect"></div>
               <div className="relative">
                 {isMenuOpen ? (
-                  <X className="h-6 w-6 text-teal-600 transform rotate-0 group-hover:rotate-90 transition-transform duration-300" />
+                  <X className="h-5 w-5 text-teal-600 transform rotate-0 group-hover:rotate-90 transition-transform duration-300" />
                 ) : (
-                  <Menu className="h-6 w-6 text-teal-600 transform group-hover:scale-110 transition-transform duration-300" />
+                  <Menu className="h-5 w-5 text-teal-600 transform group-hover:scale-110 transition-transform duration-300" />
                 )}
               </div>
             </button>
@@ -196,121 +265,119 @@ function App() {
         {/* Mobile Menu */}
         <div className={`md:hidden transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
           <div className="bg-gradient-to-b from-white via-teal-50/30 to-cyan-50/30 border-t border-teal-100">
-            <div className="px-4 py-6 space-y-2">
+            <div className="px-4 py-4 space-y-2">
               <button 
                 onClick={() => scrollToSection('inicio')} 
-                className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
+                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <Home className="h-5 w-5" />
+                <div className="flex items-center justify-center space-x-2">
+                  <Home className="h-4 w-4" />
                   <span>Inicio</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('servicios')} 
-                className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
+                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <Briefcase className="h-5 w-5" />
+                <div className="flex items-center justify-center space-x-2">
+                  <Briefcase className="h-4 w-4" />
                   <span>Servicios</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('nosotros')} 
-                className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
+                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <Users className="h-5 w-5" />
+                <div className="flex items-center justify-center space-x-2">
+                  <Users className="h-4 w-4" />
                   <span>Nosotros</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('equipo')} 
-                className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
+                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <Award className="h-5 w-5" />
+                <div className="flex items-center justify-center space-x-2">
+                  <Award className="h-4 w-4" />
                   <span>Equipo</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('contacto')} 
-                className="block w-full text-center py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 font-medium transform hover:scale-105"
+                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <Phone className="h-5 w-5" />
+                <div className="flex items-center justify-center space-x-2">
+                  <Phone className="h-4 w-4" />
                   <span>Contacto</span>
                 </div>
               </button>
 
-              <div className="pt-4 mt-4 border-t border-teal-100">
-                <p className="text-center text-sm text-gray-600 mb-3">Síguenos en redes</p>
-                <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="pt-3 mt-3 border-t border-teal-100">
+                <p className="text-center text-xs text-gray-600 mb-2">Síguenos en redes</p>
+                <div className="grid grid-cols-3 gap-2 mb-3">
                   <a 
                     href="https://facebook.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Facebook de Clean Solutions"
                   >
-                    <Facebook className="h-6 w-6" />
+                    <Facebook className="h-5 w-5" />
                   </a>
                   <a 
                     href="https://instagram.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 text-pink-600 hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 text-pink-600 hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Instagram de Clean Solutions"
                   >
-                    <Instagram className="h-6 w-6" />
+                    <Instagram className="h-5 w-5" />
                   </a>
                   <a 
                     href="https://twitter.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-xl bg-sky-50 text-sky-500 hover:bg-sky-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-sky-50 text-sky-500 hover:bg-sky-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Twitter de Clean Solutions"
                   >
-                    <Twitter className="h-6 w-6" />
+                    <Twitter className="h-5 w-5" />
                   </a>
                   <a 
                     href="https://linkedin.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="LinkedIn de Clean Solutions"
                   >
-                    <Linkedin className="h-6 w-6" />
+                    <Linkedin className="h-5 w-5" />
                   </a>
                   <a 
                     href="https://youtube.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-3 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="YouTube de Clean Solutions"
                   >
-                    <Youtube className="h-6 w-6" />
+                    <Youtube className="h-5 w-5" />
                   </a>
                   <a 
-                    href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="p-3 rounded-xl bg-green-50 text-green-600 hover:bg-green-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    href={getWhatsAppLink()} 
+                    onClick={(e) => handleWhatsAppClick(e)}
+                    className="p-2 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center cursor-pointer"
                     aria-label="WhatsApp de Clean Solutions"
                   >
-                    <MessageCircle className="h-6 w-6 fill-green-600" />
+                    <MessageCircle className="h-5 w-5 fill-green-600" />
                   </a>
                 </div>
                 
                 {/* WhatsApp Contact Button */}
                 <a 
-                  href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                  href={getWhatsAppLink()} 
+                  onClick={(e) => handleWhatsAppClick(e)}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
                 >
-                  <MessageCircle className="h-5 w-5 fill-white" />
-                  <span className="text-sm font-semibold">Contáctanos por WhatsApp</span>
+                  <MessageCircle className="h-4 w-4 fill-white" />
+                  <span className="text-xs font-semibold">Contáctanos por WhatsApp</span>
                 </a>
               </div>
             </div>
@@ -328,7 +395,7 @@ function App() {
             alt="Servicio de limpieza profesional Clean Solutions - Oficinas y empresas en Santiago"
             className="w-full h-full object-cover"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/80 via-cyan-500/75 to-blue-500/80"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-teal-800/10 to-transparent"></div>
@@ -647,6 +714,22 @@ function App() {
 
             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl">
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Solicita una Cotización</h3>
+              
+              {/* Mensajes de estado */}
+              {submitStatus === 'success' && (
+                <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-green-800">{statusMessage}</p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                  <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-red-800">{statusMessage}</p>
+                </div>
+              )}
+              
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">Nombre Completo</label>
@@ -714,9 +797,20 @@ function App() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-teal-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-semibold hover:bg-teal-700 transition-all transform hover:scale-[1.02] sm:hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                  disabled={isSubmitting}
+                  className="w-full bg-teal-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] sm:hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base flex items-center justify-center gap-2"
                 >
-                  Enviar Solicitud
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span>Enviando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4" />
+                      <span>Enviar Solicitud</span>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -763,19 +857,18 @@ function App() {
                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="YouTube">
                   <Youtube className="h-5 w-5" />
                 </a>
-                <a href="https://wa.me/56953417956" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="WhatsApp">
+                <a href={getWhatsAppLink()} onClick={(e) => handleWhatsAppClick(e)} className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110 cursor-pointer" aria-label="WhatsApp">
                   <MessageCircle className="h-5 w-5" />
                 </a>
               </div>
               <div className="mt-4">
                 <a 
-                  href="https://wa.me/56953417956?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all transform hover:scale-105"
+                  href={getWhatsAppLink('Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza')} 
+                  onClick={(e) => handleWhatsAppClick(e, 'Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza')}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all transform hover:scale-105 cursor-pointer"
                 >
                   <Phone className="h-4 w-4" />
-                  <span className="text-sm">+569 53417956</span>
+                  <span className="text-sm">+569 50293803</span>
                 </a>
               </div>
             </div>
