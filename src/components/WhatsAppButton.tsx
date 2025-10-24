@@ -22,27 +22,40 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     
     // Codificar el mensaje para URL
     const encodedMessage = encodeURIComponent(message);
     
-    // Detección mejorada de dispositivo y navegador
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-    const isAndroid = /android/i.test(userAgent);
-    const isIOS = /iphone|ipad|ipod/i.test(userAgent);
+    // Detección mejorada de dispositivo móvil
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
     
-    // URLs para diferentes plataformas
-    const whatsappApiUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    // Verificar si es móvil de múltiples formas
+    const isMobile = (
+      /android/i.test(userAgent) ||
+      /webos/i.test(userAgent) ||
+      /iphone/i.test(userAgent) ||
+      /ipad/i.test(userAgent) ||
+      /ipod/i.test(userAgent) ||
+      /blackberry/i.test(userAgent) ||
+      /windows phone/i.test(userAgent) ||
+      /opera mini/i.test(userAgent) ||
+      /mobile/i.test(userAgent) ||
+      /tablet/i.test(userAgent) ||
+      ('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0) ||
+      window.matchMedia('(max-width: 768px)').matches
+    );
+    
+    // URL única de WhatsApp API que funciona tanto en móvil como desktop
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
     
     if (isMobile) {
-      // En dispositivos móviles, usar wa.me que abre directamente la app sin intermediarios
-      window.location.href = whatsappApiUrl;
-      
+      // En móvil: abrir directamente en la misma ventana
+      window.location.href = whatsappUrl;
     } else {
-      // En desktop - Abrir WhatsApp Web directamente
-      window.open(whatsappWebUrl, '_blank', 'noopener,noreferrer');
+      // En desktop: abrir en nueva pestaña
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }
   };
   
@@ -58,7 +71,7 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   const finalClassName = `${selectedStyle} ${className} cursor-pointer`;
   
   // Generar URL fallback para accesibilidad
-  const fallbackUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const fallbackUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
   
   if (iconOnly) {
     return (
