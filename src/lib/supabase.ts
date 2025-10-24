@@ -103,7 +103,7 @@ async function sendViaAlternativeMethod(formData: ContactFormData): Promise<{ su
       try {
         // Preparar los parámetros del template (deben coincidir con el template en EmailJS)
         const templateParams = {
-          to_email: import.meta.env.VITE_EMAIL_TO || 'contacto@cleansolutions.com',
+          to_email: import.meta.env.VITE_EMAIL_TO || 'contacto@cleansolutions.cl',
           from_name: formData.name,
           from_email: formData.email,
           phone: formData.phone,
@@ -154,7 +154,7 @@ async function sendViaAlternativeMethod(formData: ContactFormData): Promise<{ su
 
 // Generar enlace mailto con los datos del formulario
 function generateMailtoLink(formData: ContactFormData): string {
-  const to = import.meta.env.VITE_EMAIL_TO || 'contacto@cleansolutions.com';
+  const to = import.meta.env.VITE_EMAIL_TO || 'contacto@cleansolutions.cl';
   const subject = encodeURIComponent(`Nueva solicitud de contacto - ${formData.service}`);
   const body = encodeURIComponent(`
 Nombre: ${formData.name}

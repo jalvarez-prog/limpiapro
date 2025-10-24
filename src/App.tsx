@@ -723,8 +723,8 @@ function App() {
                     <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600 mr-3 sm:mr-4 mt-0.5 sm:mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-base sm:text-lg text-gray-900 mb-1">Email</h4>
-                      <p className="text-sm sm:text-base text-gray-700 break-words">contacto@cleansolutions.com</p>
-                      <p className="text-sm sm:text-base text-gray-700 break-words">ventas@cleansolutions.com</p>
+                      <p className="text-sm sm:text-base text-gray-700 break-words">contacto@cleansolutions.cl</p>
+                      <p className="text-sm sm:text-base text-gray-700 break-words">ventas@cleansolutions.cl</p>
                     </div>
                   </div>
                   <div className="flex items-start">

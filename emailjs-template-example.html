@@ -1,0 +1,107 @@
+<!-- 
+INSTRUCCIONES PARA CONFIGURAR EMAILJS:
+
+1. Ve a https://dashboard.emailjs.com/admin
+2. Asegúrate de tener un servicio configurado con ID: service_w4z6mr5
+3. Crea una nueva plantilla con ID: template_d5sjpv8
+4. Copia el siguiente código HTML en el contenido de la plantilla:
+
+IMPORTANTE: Las variables entre dobles llaves deben coincidir exactamente con los nombres
+que se envían desde el código (ver src/lib/supabase.ts líneas 105-113)
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #14B8A6 0%, #06B6D4 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            margin: -30px -30px 30px -30px;
+        }
+        .field {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .label {
+            font-weight: bold;
+            color: #14B8A6;
+            display: inline-block;
+            width: 120px;
+        }
+        .value {
+            color: #555;
+        }
+        .message-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #14B8A6;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Nueva Solicitud de Contacto</h2>
+            <p>Clean Solutions - Servicio de Limpieza Profesional</p>
+        </div>
+        
+        <div class="field">
+            <span class="label">Nombre:</span>
+            <span class="value">{{from_name}}</span>
+        </div>
+        
+        <div class="field">
+            <span class="label">Email:</span>
+            <span class="value">{{from_email}}</span>
+        </div>
+        
+        <div class="field">
+            <span class="label">Teléfono:</span>
+            <span class="value">{{phone}}</span>
+        </div>
+        
+        <div class="field">
+            <span class="label">Servicio:</span>
+            <span class="value">{{service}}</span>
+        </div>
+        
+        <div class="message-box">
+            <h3 style="color: #14B8A6; margin-top: 0;">Mensaje:</h3>
+            <p>{{message}}</p>
+        </div>
+        
+        <div class="footer">
+            <p>Este mensaje fue enviado desde el formulario de contacto en cleansolutions.cl</p>
+            <p>Para responder, usa el email: {{reply_to}}</p>
+        </div>
+    </div>
+</body>
+</html>
