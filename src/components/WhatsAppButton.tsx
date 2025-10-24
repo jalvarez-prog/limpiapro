@@ -37,12 +37,11 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
     const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
     
     if (isMobile) {
-      // En dispositivos móviles, usar wa.me directamente (más confiable)
+      // En dispositivos móviles, usar wa.me que abre directamente la app sin intermediarios
       window.location.href = whatsappApiUrl;
       
     } else {
       // En desktop - Abrir WhatsApp Web directamente
-      // Esto es más confiable y evita problemas con user gestures
       window.open(whatsappWebUrl, '_blank', 'noopener,noreferrer');
     }
   };
@@ -68,8 +67,6 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
         onClick={handleClick}
         className={finalClassName}
         aria-label="Contactar por WhatsApp"
-        target="_blank"
-        rel="noopener noreferrer"
       >
         <MessageCircle className="h-5 w-5 fill-current" />
       </a>
@@ -82,8 +79,6 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
       onClick={handleClick}
       className={finalClassName}
       aria-label="Contactar por WhatsApp"
-      target="_blank"
-      rel="noopener noreferrer"
     >
       {showIcon && <MessageCircle className="h-4 w-4 fill-current" />}
       {children || <span>WhatsApp</span>}

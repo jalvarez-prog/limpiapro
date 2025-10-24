@@ -29,20 +29,55 @@ function App() {
     e.preventDefault();
     const phoneNumber = '56950293803';
     
-    // Detección de dispositivo
+    // Detección de dispositivo y sistema operativo
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+    const isAndroid = /android/i.test(userAgent);
+    const isIOS = /iphone|ipad|ipod/i.test(userAgent);
     
     // URLs para diferentes plataformas
     const whatsappApiUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    const whatsappAppUrl = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
     
     if (isMobile) {
-      // En dispositivos móviles, usar wa.me directamente
-      window.location.href = whatsappApiUrl;
+      // En dispositivos móviles, intentar abrir la app nativa
+      if (isAndroid) {
+        // Android: Usar intent para abrir WhatsApp directamente
+        const intentUrl = `intent://send?phone=${phoneNumber}&text=${message}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+        window.location.href = intentUrl;
+        
+        // Si la app no está instalada, usar wa.me como fallback
+        setTimeout(() => {
+          if (document.visibilityState === 'visible') {
+            window.location.href = whatsappApiUrl;
+          }
+        }, 1000);
+        
+      } else if (isIOS) {
+        // iOS: Usar esquema URL de WhatsApp
+        window.location.href = whatsappAppUrl;
+        
+        // Fallback a wa.me si no se abre la app
+        setTimeout(() => {
+          if (document.visibilityState === 'visible') {
+            window.location.href = whatsappApiUrl;
+          }
+        }, 1000);
+        
+      } else {
+        // Otros móviles: intentar esquema universal
+        window.location.href = whatsappAppUrl;
+        
+        setTimeout(() => {
+          if (document.visibilityState === 'visible') {
+            window.location.href = whatsappApiUrl;
+          }
+        }, 1000);
+      }
       
     } else {
-      // En desktop - Abrir WhatsApp Web directamente
+      // En desktop - Abrir WhatsApp Web
       window.open(whatsappWebUrl, '_blank', 'noopener,noreferrer');
     }
   };
