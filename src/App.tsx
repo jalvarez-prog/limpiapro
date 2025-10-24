@@ -26,60 +26,20 @@ function App() {
 
   // Función mejorada para abrir WhatsApp con detección inteligente de plataforma
   const handleWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>, message: string = 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza') => {
-    e.preventDefault();
     const phoneNumber = '56950293803';
     
-    // Detección de dispositivo y sistema operativo
+    // Detección de dispositivo
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-    const isAndroid = /android/i.test(userAgent);
-    const isIOS = /iphone|ipad|ipod/i.test(userAgent);
     
-    // URLs para diferentes plataformas
-    const whatsappApiUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
-    const whatsappAppUrl = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
-    
-    if (isMobile) {
-      // En dispositivos móviles, intentar abrir la app nativa
-      if (isAndroid) {
-        // Android: Usar intent para abrir WhatsApp directamente
-        const intentUrl = `intent://send?phone=${phoneNumber}&text=${message}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
-        window.location.href = intentUrl;
-        
-        // Si la app no está instalada, usar wa.me como fallback
-        setTimeout(() => {
-          if (document.visibilityState === 'visible') {
-            window.location.href = whatsappApiUrl;
-          }
-        }, 1000);
-        
-      } else if (isIOS) {
-        // iOS: Usar esquema URL de WhatsApp
-        window.location.href = whatsappAppUrl;
-        
-        // Fallback a wa.me si no se abre la app
-        setTimeout(() => {
-          if (document.visibilityState === 'visible') {
-            window.location.href = whatsappApiUrl;
-          }
-        }, 1000);
-        
-      } else {
-        // Otros móviles: intentar esquema universal
-        window.location.href = whatsappAppUrl;
-        
-        setTimeout(() => {
-          if (document.visibilityState === 'visible') {
-            window.location.href = whatsappApiUrl;
-          }
-        }, 1000);
-      }
-      
-    } else {
-      // En desktop - Abrir WhatsApp Web
-      window.open(whatsappWebUrl, '_blank', 'noopener,noreferrer');
+    // En móvil, dejar que el enlace funcione nativamente con target="_blank"
+    // En desktop, prevenir el comportamiento por defecto y abrir en nueva ventana
+    if (!isMobile) {
+      e.preventDefault();
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }
+    // En móvil, el enlace funcionará nativamente gracias a target="_blank" y rel="noopener noreferrer"
   };
   
   // Función auxiliar para obtener la URL de WhatsApp (para casos donde no podemos usar onClick)
@@ -398,6 +358,8 @@ function App() {
                   <a 
                     href={getWhatsAppLink()} 
                     onClick={(e) => handleWhatsAppClick(e)}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-2 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center cursor-pointer"
                     aria-label="WhatsApp de Clean Solutions"
                   >
@@ -409,6 +371,8 @@ function App() {
                 <a 
                   href={getWhatsAppLink()} 
                   onClick={(e) => handleWhatsAppClick(e)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
                 >
                   <MessageCircle className="h-4 w-4 fill-white" />
@@ -892,14 +856,16 @@ function App() {
                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="YouTube">
                   <Youtube className="h-5 w-5" />
                 </a>
-                <a href={getWhatsAppLink()} onClick={(e) => handleWhatsAppClick(e)} className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110 cursor-pointer" aria-label="WhatsApp">
+                <a href={getWhatsAppLink()} onClick={(e) => handleWhatsAppClick(e)} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110 cursor-pointer" aria-label="WhatsApp">
                   <MessageCircle className="h-5 w-5" />
                 </a>
               </div>
               <div className="mt-4">
                 <a 
-                  href={getWhatsAppLink('Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza')} 
-                  onClick={(e) => handleWhatsAppClick(e, 'Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20limpieza')}
+                  href={getWhatsAppLink('Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza')} 
+                  onClick={(e) => handleWhatsAppClick(e, 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza')}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all transform hover:scale-105 cursor-pointer"
                 >
                   <Phone className="h-4 w-4" />

@@ -21,13 +21,7 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   iconOnly = false,
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Codificar el mensaje para URL
-    const encodedMessage = encodeURIComponent(message);
-    
-    // Detección mejorada de dispositivo móvil
+    // No prevenir el comportamiento por defecto en móviles
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
     
     // Verificar si es móvil de múltiples formas
@@ -47,14 +41,13 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
       window.matchMedia('(max-width: 768px)').matches
     );
     
-    // URL única de WhatsApp API que funciona tanto en móvil como desktop
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
-    
-    if (isMobile) {
-      // En móvil: abrir directamente en la misma ventana
-      window.location.href = whatsappUrl;
-    } else {
-      // En desktop: abrir en nueva pestaña
+    // En móvil, dejar que el enlace funcione de manera nativa
+    // En desktop, prevenir y abrir en nueva ventana
+    if (!isMobile) {
+      e.preventDefault();
+      e.stopPropagation();
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }
   };
@@ -70,8 +63,8 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   const selectedStyle = baseStyles[variant] || baseStyles.primary;
   const finalClassName = `${selectedStyle} ${className} cursor-pointer`;
   
-  // Generar URL fallback para accesibilidad
-  const fallbackUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+  // Generar URL usando wa.me que funciona mejor en móviles
+  const fallbackUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
   
   if (iconOnly) {
     return (
@@ -79,6 +72,8 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
         href={fallbackUrl}
         onClick={handleClick}
         className={finalClassName}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
       >
         <MessageCircle className="h-5 w-5 fill-current" />
@@ -91,6 +86,8 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
       href={fallbackUrl}
       onClick={handleClick}
       className={finalClassName}
+      target="_blank"
+      rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"
     >
       {showIcon && <MessageCircle className="h-4 w-4 fill-current" />}
