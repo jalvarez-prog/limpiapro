@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
+import { handleWhatsAppClick, generateWhatsAppUrl, detectDevice, WHATSAPP_CONFIG } from '../utils/whatsappHandler';
 
 interface WhatsAppButtonProps {
   phoneNumber?: string;
@@ -12,44 +13,18 @@ interface WhatsAppButtonProps {
 }
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
-  phoneNumber = '56950293803',
-  message = 'Hola, me gustaría solicitar información sobre los servicios de limpieza',
+  phoneNumber = WHATSAPP_CONFIG.DEFAULT_PHONE,
+  message = WHATSAPP_CONFIG.DEFAULT_MESSAGE,
   variant = 'primary',
   className = '',
   children,
   showIcon = true,
   iconOnly = false,
 }) => {
+  const device = detectDevice();
+  
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // No prevenir el comportamiento por defecto en móviles
-    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-    
-    // Verificar si es móvil de múltiples formas
-    const isMobile = (
-      /android/i.test(userAgent) ||
-      /webos/i.test(userAgent) ||
-      /iphone/i.test(userAgent) ||
-      /ipad/i.test(userAgent) ||
-      /ipod/i.test(userAgent) ||
-      /blackberry/i.test(userAgent) ||
-      /windows phone/i.test(userAgent) ||
-      /opera mini/i.test(userAgent) ||
-      /mobile/i.test(userAgent) ||
-      /tablet/i.test(userAgent) ||
-      ('ontouchstart' in window) ||
-      (navigator.maxTouchPoints > 0) ||
-      window.matchMedia('(max-width: 768px)').matches
-    );
-    
-    // En móvil, dejar que el enlace funcione de manera nativa
-    // En desktop, prevenir y abrir en nueva ventana
-    if (!isMobile) {
-      e.preventDefault();
-      e.stopPropagation();
-      const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodedMessage}`;
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    }
+    handleWhatsAppClick(e, { phoneNumber, message });
   };
   
   // Estilos base según la variante
@@ -63,17 +38,16 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   const selectedStyle = baseStyles[variant] || baseStyles.primary;
   const finalClassName = `${selectedStyle} ${className} cursor-pointer`;
   
-  // Generar URL usando wa.me que funciona mejor en móviles
-  const fallbackUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+  // Generar URL usando la nueva utilidad
+  const whatsappUrl = generateWhatsAppUrl({ phoneNumber, message });
   
   if (iconOnly) {
     return (
       <a 
-        href={fallbackUrl}
+        href={whatsappUrl}
         onClick={handleClick}
         className={finalClassName}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         aria-label="Contactar por WhatsApp"
       >
         <MessageCircle className="h-5 w-5 fill-current" />
@@ -83,11 +57,10 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   
   return (
     <a 
-      href={fallbackUrl}
+      href={whatsappUrl}
       onClick={handleClick}
       className={finalClassName}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       aria-label="Contactar por WhatsApp"
     >
       {showIcon && <MessageCircle className="h-4 w-4 fill-current" />}

@@ -6,10 +6,20 @@ import LogoIcon from './components/LogoIcon';
 import SEO from './components/SEO';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import { submitContactForm, ContactFormData } from './lib/supabase';
+import { useWhatsApp, detectDevice } from './utils/whatsappHandler';
 
 function App() {
   // Hook para manejar errores de solicitudes bloqueadas (como Google Translate)
   useBlockedRequestHandler();
+  
+  // Hook personalizado para manejar WhatsApp con la nueva utilidad robusta
+  const { handleClick: handleWhatsAppClick, getWhatsAppUrl } = useWhatsApp(
+    '56950293803',
+    'Hola, me gustaría solicitar información sobre los servicios de limpieza'
+  );
+  
+  // Detectar dispositivo una sola vez
+  const device = detectDevice();
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,30 +33,6 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
-
-  // Función mejorada para abrir WhatsApp con detección inteligente de plataforma
-  const handleWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>, message: string = 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza') => {
-    const phoneNumber = '56950293803';
-    
-    // Detección de dispositivo
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-    
-    // En móvil, dejar que el enlace funcione nativamente con target="_blank"
-    // En desktop, prevenir el comportamiento por defecto y abrir en nueva ventana
-    if (!isMobile) {
-      e.preventDefault();
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    }
-    // En móvil, el enlace funcionará nativamente gracias a target="_blank" y rel="noopener noreferrer"
-  };
-  
-  // Función auxiliar para obtener la URL de WhatsApp (para casos donde no podemos usar onClick)
-  const getWhatsAppLink = (message: string = 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza') => {
-    const phoneNumber = '56950293803';
-    return `https://wa.me/${phoneNumber}?text=${message}`;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,8 +212,9 @@ function App() {
 
               {/* WhatsApp Button */}
               <a 
-                href={getWhatsAppLink()} 
-                onClick={(e) => handleWhatsAppClick(e)}
+                href={getWhatsAppUrl()} 
+                onClick={handleWhatsAppClick}
+                {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="relative ml-3 flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 group overflow-hidden cursor-pointer"
                 style={{animationDelay: '0.7s'}}
               >
@@ -356,10 +343,9 @@ function App() {
                     <Youtube className="h-5 w-5" />
                   </a>
                   <a 
-                    href={getWhatsAppLink()} 
-                    onClick={(e) => handleWhatsAppClick(e)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={getWhatsAppUrl()} 
+                    onClick={handleWhatsAppClick}
+                    {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="p-2 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center cursor-pointer"
                     aria-label="WhatsApp de Clean Solutions"
                   >
@@ -369,10 +355,9 @@ function App() {
                 
                 {/* WhatsApp Contact Button */}
                 <a 
-                  href={getWhatsAppLink()} 
-                  onClick={(e) => handleWhatsAppClick(e)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={getWhatsAppUrl()} 
+                  onClick={handleWhatsAppClick}
+                  {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
                 >
                   <MessageCircle className="h-4 w-4 fill-white" />
@@ -856,16 +841,15 @@ function App() {
                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white transition-all transform hover:scale-110" aria-label="YouTube">
                   <Youtube className="h-5 w-5" />
                 </a>
-                <a href={getWhatsAppLink()} onClick={(e) => handleWhatsAppClick(e)} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110 cursor-pointer" aria-label="WhatsApp">
+                <a href={getWhatsAppUrl()} onClick={handleWhatsAppClick} {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="p-2 rounded-lg bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white transition-all transform hover:scale-110 cursor-pointer" aria-label="WhatsApp">
                   <MessageCircle className="h-5 w-5" />
                 </a>
               </div>
               <div className="mt-4">
                 <a 
-                  href={getWhatsAppLink('Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza')} 
-                  onClick={(e) => handleWhatsAppClick(e, 'Hola%2C%20me%20gustaría%20solicitar%20información%20sobre%20los%20servicios%20de%20limpieza')}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={getWhatsAppUrl('Hola, me gustaría solicitar información sobre los servicios de limpieza')} 
+                  onClick={(e) => handleWhatsAppClick(e, 'Hola, me gustaría solicitar información sobre los servicios de limpieza')}
+                  {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all transform hover:scale-105 cursor-pointer"
                 >
                   <Phone className="h-4 w-4" />
