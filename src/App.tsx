@@ -247,109 +247,82 @@ function App() {
         {/* Mobile Menu */}
         <div className={`md:hidden transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
           <div className="bg-gradient-to-b from-white via-teal-50/30 to-cyan-50/30 border-t border-teal-100">
-            <div className="px-4 py-4 space-y-2">
+            <div className="px-6 py-6 space-y-4">
               <button 
                 onClick={() => scrollToSection('inicio')} 
-                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
+                className="block w-full text-center py-4 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-lg font-semibold transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-2">
-                  <Home className="h-4 w-4" />
+                <div className="flex items-center justify-center space-x-3">
+                  <Home className="h-6 w-6" />
                   <span>Inicio</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('servicios')} 
-                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
+                className="block w-full text-center py-4 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-lg font-semibold transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-2">
-                  <Briefcase className="h-4 w-4" />
+                <div className="flex items-center justify-center space-x-3">
+                  <Briefcase className="h-6 w-6" />
                   <span>Servicios</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('nosotros')} 
-                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
+                className="block w-full text-center py-4 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-lg font-semibold transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-2">
-                  <Users className="h-4 w-4" />
+                <div className="flex items-center justify-center space-x-3">
+                  <Users className="h-6 w-6" />
                   <span>Nosotros</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('equipo')} 
-                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
+                className="block w-full text-center py-4 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-lg font-semibold transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-2">
-                  <Award className="h-4 w-4" />
+                <div className="flex items-center justify-center space-x-3">
+                  <Award className="h-6 w-6" />
                   <span>Equipo</span>
                 </div>
               </button>
               <button 
                 onClick={() => scrollToSection('contacto')} 
-                className="block w-full text-center py-2.5 px-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-sm font-medium transform hover:scale-105"
+                className="block w-full text-center py-4 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all duration-300 text-lg font-semibold transform hover:scale-105"
               >
-                <div className="flex items-center justify-center space-x-2">
-                  <Phone className="h-4 w-4" />
+                <div className="flex items-center justify-center space-x-3">
+                  <Phone className="h-6 w-6" />
                   <span>Contacto</span>
                 </div>
               </button>
 
-              <div className="pt-3 mt-3 border-t border-teal-100">
-                <p className="text-center text-xs text-gray-600 mb-2">Síguenos en redes</p>
-                <div className="grid grid-cols-3 gap-2 mb-3">
+              <div className="pt-5 mt-5 border-t border-teal-100">
+                <p className="text-center text-base text-gray-600 mb-4 font-medium">Síguenos en redes</p>
+                <div className="grid grid-cols-3 gap-4 mb-5">
                   <a 
-                    href="https://facebook.com" 
+                    href="https://youtube.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
-                    aria-label="Facebook de Clean Solutions"
+                    className="p-4 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    aria-label="YouTube de Clean Solutions"
                   >
-                    <Facebook className="h-5 w-5" />
+                    <Youtube className="h-7 w-7" />
                   </a>
                   <a 
                     href="https://instagram.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 text-pink-600 hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    className="p-4 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 text-pink-600 hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
                     aria-label="Instagram de Clean Solutions"
                   >
-                    <Instagram className="h-5 w-5" />
+                    <Instagram className="h-7 w-7" />
                   </a>
                   <a 
                     href="https://twitter.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-lg bg-sky-50 text-sky-500 hover:bg-sky-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
-                    aria-label="Twitter de Clean Solutions"
+                    className="p-4 rounded-lg bg-sky-50 text-sky-500 hover:bg-sky-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+                    aria-label="X (Twitter) de Clean Solutions"
                   >
-                    <Twitter className="h-5 w-5" />
-                  </a>
-                  <a 
-                    href="https://linkedin.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="p-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
-                    aria-label="LinkedIn de Clean Solutions"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a 
-                    href="https://youtube.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
-                    aria-label="YouTube de Clean Solutions"
-                  >
-                    <Youtube className="h-5 w-5" />
-                  </a>
-                  <a 
-                    href={getWhatsAppUrl()} 
-                    onClick={handleWhatsAppClick}
-                    {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="p-2 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-all duration-300 transform hover:scale-110 flex items-center justify-center cursor-pointer"
-                    aria-label="WhatsApp de Clean Solutions"
-                  >
-                    <MessageCircle className="h-5 w-5 fill-green-600" />
+                    <Twitter className="h-7 w-7" />
                   </a>
                 </div>
                 
@@ -358,10 +331,10 @@ function App() {
                   href={getWhatsAppUrl()} 
                   onClick={handleWhatsAppClick}
                   {...(device.isMobile ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="w-full flex items-center justify-center gap-3 px-4 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
                 >
-                  <MessageCircle className="h-4 w-4 fill-white" />
-                  <span className="text-xs font-semibold">Contáctanos por WhatsApp</span>
+                  <MessageCircle className="h-5 w-5 fill-white" />
+                  <span className="text-base font-bold">Contáctanos por WhatsApp</span>
                 </a>
               </div>
             </div>
@@ -409,6 +382,21 @@ function App() {
               <span className="relative z-10">Solicitar Cotización</span>
               <div className="absolute inset-0 shine-effect"></div>
             </button>
+
+            {/* Mensaje promocional de productos */}
+            <div className="mt-6 sm:mt-8 opacity-0 animate-fadeInUp animate-delay-500">
+              <div className="inline-flex items-center bg-gradient-to-r from-amber-500/90 to-yellow-500/90 backdrop-blur-md px-4 sm:px-6 py-3 sm:py-4 rounded-full border-2 border-yellow-300/50 shadow-2xl hover:from-amber-500 hover:to-yellow-500 hover:shadow-yellow-400/50 transition-all duration-300 group transform hover:scale-105">
+                <span className="text-white text-lg sm:text-xl mr-2 animate-pulse drop-shadow-lg">🧹</span>
+                <span className="text-white text-sm sm:text-base font-bold drop-shadow-md">
+                  ¡Pregunta por los precios y stock de nuestros productos de Aseo para todo tipo de superficies!
+                </span>
+                <span className="text-white text-lg sm:text-xl ml-2 animate-pulse drop-shadow-lg">✨</span>
+              </div>
+              {/* Glow effect */}
+              <div className="absolute inset-0 -z-10 mt-6 sm:mt-8">
+                <div className="mx-auto w-fit h-12 bg-yellow-400/30 rounded-full blur-2xl animate-pulse"></div>
+              </div>
+            </div>
 
             <div className="mt-2 sm:mt-12 md:mt-16 mb-28 sm:mb-20 md:mb-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8 max-w-4xl mx-auto px-4 sm:px-0">
               <div className="opacity-0 animate-fadeInUp animate-delay-500 group bg-white/10 backdrop-blur-md p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-2xl hover:bg-white/20 transition-all duration-300 border border-white/20 transform hover:-translate-y-1 md:hover:-translate-y-2">
