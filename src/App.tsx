@@ -508,7 +508,7 @@ function App() {
             <div>
               <h2 id="nosotros-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Sobre Clean Solutions</h2>
               <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
-              Con más de 10 años de experiencia en el sector de limpieza profesional, Clean Solutions se ha consolidado como líder en servicios de limpieza para empresas, oficinas y hogares.
+              Con varios años de experiencia en el sector de limpieza profesional, Clean Solutions se ha consolidado como líder en servicios de limpieza para empresas, oficinas y hogares.
               </p>
               <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 Nuestra misión es proporcionar servicios de limpieza excepcionales que superen las expectativas de nuestros clientes, utilizando técnicas avanzadas y productos ecológicos de alta calidad.
