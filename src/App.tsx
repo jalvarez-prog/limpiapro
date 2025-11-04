@@ -5,7 +5,9 @@ import NoTranslate from './components/NoTranslate';
 import LogoIcon from './components/LogoIcon';
 import SEO from './components/SEO';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
-import { submitContactForm, ContactFormData } from './lib/supabase';
+import PromoBalloon from './components/PromoBalloon';
+import { ContactFormData } from './lib/supabase';
+import { sendContactEmail } from './emailjs-static';
 import { useWhatsApp, detectDevice } from './utils/whatsappHandler';
 
 function App() {
@@ -49,11 +51,11 @@ function App() {
     setStatusMessage('');
 
     try {
-      const result = await submitContactForm(formData);
+      const success = await sendContactEmail(formData);
       
-      if (result.success) {
+      if (success) {
         setSubmitStatus('success');
-        setStatusMessage(result.message);
+        setStatusMessage('Tu solicitud ha sido enviada exitosamente. Nos pondremos en contacto contigo pronto.');
         // Limpiar formulario después de envío exitoso
         setFormData({ name: '', email: '', phone: '', service: '', message: '' });
         
@@ -64,7 +66,7 @@ function App() {
         }, 5000);
       } else {
         setSubmitStatus('error');
-        setStatusMessage(result.message);
+        setStatusMessage('Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.');
       }
     } catch (error) {
       setSubmitStatus('error');
@@ -345,6 +347,9 @@ function App() {
 
       {/* Hero Section */}
       <section id="inicio" className="pt-16 md:pt-20 relative min-h-screen flex items-center overflow-hidden" role="banner">
+        {/* Promotional Balloon */}
+        <PromoBalloon />
+        
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
